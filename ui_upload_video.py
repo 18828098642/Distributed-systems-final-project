@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import requests
-
+from controllers import show_frame, quit_app
 API_BASE_URL = 'http://127.0.0.1:5000'
 
 def setup_upload_video_frame(root, upload_video_frame):
@@ -33,6 +33,14 @@ def setup_upload_video_frame(root, upload_video_frame):
 
     upload_button = tk.Button(upload_video_frame, text="Upload Video", command=lambda: perform_video_upload(title_entry, upload_username_entry, video_path_entry, duration_entry))
     upload_button.pack(pady=10)
+
+    # Back to comment management button
+    back_to_update_button = tk.Button(upload_video_frame, text="Back to Video Management", command=lambda: show_frame(root, 'video_management_frame'))
+    back_to_update_button.pack(side='left', padx=10, pady=20)
+
+    # Exit system button
+    exit_button = tk.Button(upload_video_frame, text="Exit System", command=lambda: quit_app(root))
+    exit_button.pack(side='right', padx=10, pady=20)
 
 def browse_video_file(video_path_entry):
     file_path = filedialog.askopenfilename(filetypes=[("Video files", "*.mp4 *.avi *.mov")])

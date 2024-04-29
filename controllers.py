@@ -69,9 +69,19 @@ def show_frame(root, frame_name):
         'delete_video': root.delete_video_frame,
 
         'search_user_by_id_frame': root.search_user_by_id_frame,
-        'search_user_by_keyword_frame': root.search_user_by_keyword_frame,
+        'search_user_by_keyword_frame': root.search_user_by_keywords_frame,
         'list_all_users_frame': root.list_all_users_frame,
-        'update_user_frame': root.update_user_frame
+        'update_user_frame': root.update_user_frame,
+        'delete_user_frame': root.delete_user_frame,
+
+        'post_comment_frame': root.post_comment_frame,
+        'find_comment_by_id_frame': root.find_comment_by_id_frame,
+        'find_comment_by_keyword_frame': root.find_comment_by_keyword_frame,
+        'list_all_comments_frame': root.list_all_comments_frame,
+        'update_comment_frame': root.update_comment_frame,
+        'delete_comment_frame':root.delete_comment_frame,
+
+
 
 
     }
@@ -83,12 +93,7 @@ def show_frame(root, frame_name):
 
 def back_to_welcome(root):
     show_frame(root, 'welcome_frame')
-def populate_users_text_area(root, users_data):
-    # Logic to populate the users text area
-    text_area = root.user_management_frame.text_area  # Assuming the text area widget is stored in the frame
-    text_area.delete('1.0', tk.END)
-    for user in users_data:
-        text_area.insert(tk.END, f"User ID: {user['id']}, Name: {user['name']}\n")
+
 
 
 

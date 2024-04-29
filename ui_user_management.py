@@ -1,5 +1,5 @@
 import tkinter as tk
-from controllers import show_frame, back_to_welcome, quit_app, populate_users_text_area
+from controllers import show_frame, back_to_welcome, quit_app
 
 def setup_user_management_frame(root, user_management_frame):
     # Title Label
@@ -22,13 +22,17 @@ def setup_user_management_frame(root, user_management_frame):
 
     # Button to list all users
     list_all_users_button = tk.Button(user_buttons_frame, text="List All Users",
-                                      command=lambda: populate_users_text_area())
+                                      command=lambda: show_frame(root, 'list_all_users_frame'))
     list_all_users_button.pack(fill='x', pady=5)
 
     # Button to update user information
     update_user_information_button = tk.Button(user_buttons_frame, text="Update User Information",
                                                command=lambda: show_frame(root, 'update_user_frame'))
     update_user_information_button.pack(fill='x', pady=5)
+
+    Delete_user_information_button = tk.Button(user_buttons_frame, text="Delete user frame",
+                                               command=lambda: show_frame(root, 'delete_user_frame'))
+    Delete_user_information_button.pack(fill='x', pady=5)
 
     # Navigation and exit buttons
     user_management_back_button = tk.Button(user_management_frame, text="Back to last page",

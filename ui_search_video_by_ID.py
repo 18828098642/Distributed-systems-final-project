@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from controllers import show_frame
+from controllers import show_frame, quit_app
 import client
 
 def setup_search_video_by_ID_frame(root, search_video_id_frame):

@@ -35,9 +35,9 @@ def setup_list_videos_frame(root, list_videos_frame):
 
 
     back_to_video_management_button = tk.Button(list_videos_frame, text="Back to Video Management", command=lambda: show_frame(root, 'video_management_frame'))
-    back_to_video_management_button.pack(side='left', padx=10, pady=20)
+    back_to_video_management_button.pack(side='left', padx=10)
 
     exit_search_keywords_frame_button = tk.Button(list_videos_frame, text="Exit System", command=root.quit)
-    exit_search_keywords_frame_button.pack(side='right', padx=10, pady=20)
+    exit_search_keywords_frame_button.pack(side='right', padx=10)
 
     return list_videos_frame

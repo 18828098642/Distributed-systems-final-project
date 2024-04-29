@@ -18,6 +18,14 @@ from ui_search_user_by_id import setup_search_user_by_id_frame
 from ui_search_user_by_keywords import setup_search_user_by_keywords_frame
 from ui_list_all_users import setup_list_all_users_frame
 from ui_update_user import setup_update_user_frame
+from ui_delete_user import setup_delete_user_frame
+
+from ui_post_comment import setup_post_comment_frame
+from ui_find_comment_by_id import setup_find_comment_by_id_frame
+from ui_find_comment_by_keyword import setup_find_comment_by_keyword_frame
+from ui_list_all_comments import setup_list_all_comments_frame
+from ui_update_comment import setup_update_comment_frame
+from ui_delete_comment import setup_delete_comment_frame
 
 
 
@@ -46,11 +54,16 @@ def main():
     setup_delete_video_frame(root, root.delete_video_frame)  # Correct setup call
 
     root.search_user_by_id_frame = tk.Frame(root)
+    setup_search_user_by_id_frame(root, root.search_user_by_id_frame)
     root.search_user_by_keywords_frame = tk.Frame(root)
+    setup_search_user_by_keywords_frame(root, root.search_user_by_keywords_frame)
     root.list_all_users_frame = tk.Frame(root)
+    setup_list_all_users_frame(root, root.list_all_users_frame)
     root.update_user_frame = tk.Frame(root)
+    setup_update_user_frame(root, root.update_user_frame)
+    root.delete_user_frame = tk.Frame(root)
+    setup_delete_user_frame(root, root.delete_user_frame)
 
-    # Setup frames
     setup_login_frame(root, root.login_frame, root.welcome_frame)  # Pass welcome_frame as well
     setup_welcome_frame(root, root.welcome_frame)
 
@@ -70,6 +83,21 @@ def main():
     setup_search_user_by_keywords_frame(root, root.search_user_by_keywords_frame)
     setup_list_all_users_frame(root, root.list_all_users_frame)
     setup_update_user_frame(root, root.update_user_frame)
+    setup_delete_user_frame(root, root.delete_user_frame)
+
+    root.post_comment_frame = tk.Frame(root)
+    setup_post_comment_frame(root, root.post_comment_frame)
+    root.find_comment_by_id_frame = tk.Frame(root)
+    setup_find_comment_by_id_frame(root, root.find_comment_by_id_frame)
+    root.find_comment_by_keyword_frame = tk.Frame(root)
+    setup_find_comment_by_keyword_frame(root, root.find_comment_by_keyword_frame)
+    root.list_all_comments_frame = tk.Frame(root)
+    setup_list_all_comments_frame(root, root.list_all_comments_frame)
+    root.update_comment_frame = tk.Frame(root)
+    setup_update_comment_frame(root, root.update_comment_frame)
+    root.delete_comment_frame = tk.Frame(root)
+    setup_delete_comment_frame(root, root.delete_comment_frame)
+
 
     show_frame(root, 'login_frame')
 

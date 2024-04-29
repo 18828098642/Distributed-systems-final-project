@@ -1,48 +1,61 @@
 import tkinter as tk
-from tkinter import messagebox, scrolledtext
-import client  # Assuming the client module can interact with the backend.
-from controllers import show_frame, back_to_welcome, quit_app, populate_users_text_area
-def setup_list_all_users_frame(root, list_users_frame):
-    # Frame configuration for list all users
-    list_users_label = tk.Label(list_users_frame, text="List of All Users", font=("Arial", 20))
-    list_users_label.grid(row=0, column=0, columnspan=2, pady=10, padx=10, sticky="ew")
+from tkinter import scrolledtext, messagebox
+from controllers import show_frame, quit_app
+import client
 
-    # ScrolledText area for displaying all users
-    users_text_area = scrolledtext.ScrolledText(list_users_frame, width=70, height=15, wrap=tk.WORD, state='disabled')
-    users_text_area.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+def format_json(data, indent=0):
+    formatted_text = ""
+    if isinstance(data, dict):
+        for key, value in data.items():
+            formatted_text += "    " * indent + f"{key}: "
+            if isinstance(value, dict):
+                formatted_text += "\n" + format_json(value, indent + 1)
+            elif isinstance(value, list):
+                formatted_text += "\n" + format_json(value, indent + 1)
+            else:
+                formatted_text += f"{value}\n"
+    elif isinstance(data, list):
+        for item in data:
+            formatted_text += format_json(item, indent)
+    else:
+        formatted_text += f"{'    ' * indent}{data}\n"
+    return formatted_text
 
-    # Function to populate the text area with user details
-    def populate_users_text_area():
+def setup_list_all_users_frame(root, list_all_users_frame):
+    # Clear any existing content in the frame
+    for widget in list_all_users_frame.winfo_children():
+        widget.destroy()
+
+    # Add title label
+    list_users_label = tk.Label(list_all_users_frame, text="List of All Users", font=("Arial", 20))
+    list_users_label.pack(pady=20)
+
+    # Create and set up a scrolling text area to display user data
+    users_text_area = scrolledtext.ScrolledText(list_all_users_frame, width=70, height=15, wrap=tk.WORD, state='disabled')
+    users_text_area.pack(pady=10)
+
+    # Define a function to display all users
+    def show_all_users():
         try:
-            users = client.list_all_users()
+            users = client.list_all_users()  # Fetches the current list of users
+            formatted_json = format_json(users)  # Format the user data using the custom formatter
             users_text_area.config(state='normal')
             users_text_area.delete('1.0', tk.END)
-            if 'error' in users:
-                messagebox.showerror("Error", users['error'])
-            else:
-                for user in users:
-                    users_text_area.insert(tk.END, f"ID: {user['id']}, Username: {user['username']}\n")
-                    users_text_area.insert(tk.END, "Comments:\n")
-                    for comment in user['comments']:
-                        users_text_area.insert(tk.END, f"  - {comment['text']} (Comment ID {comment['id']})\n")
-                    users_text_area.insert(tk.END, "Videos:\n")
-                    for video in user['videos']:
-                        users_text_area.insert(tk.END, f"  - {video['title']} (Video ID {video['id']})\n")
-                    users_text_area.insert(tk.END, "-" * 80 + "\n")  # Separator for readability
+            users_text_area.insert(tk.END, formatted_json)  # Display the formatted JSON in the text area
             users_text_area.config(state='disabled')
         except Exception as e:
-            messagebox.showerror("Search Error", str(e))
+            messagebox.showerror("List Error", str(e))
 
-    # Button to refresh and list all users
-    refresh_users_button = tk.Button(list_users_frame, text="Refresh List", command=populate_users_text_area)
-    refresh_users_button.grid(row=2, column=0, columnspan=2, pady=10, padx=10, sticky="ew")
+    # Refresh list button
+    refresh_button = tk.Button(list_all_users_frame, text="Refresh List", command=show_all_users)
+    refresh_button.pack(pady=10)
 
-    # Back button to return to the user management page
-    back_to_user_management_button = tk.Button(list_users_frame, text="Back to User Management", command=lambda: show_frame(root, 'user_management_frame'))
-    back_to_user_management_button.grid(row=3, column=0, padx=10, pady=20, sticky="w")
+    # Back to user management button
+    back_button = tk.Button(list_all_users_frame, text="Back to User Management", command=lambda: show_frame(root, 'user_management_frame'))
+    back_button.pack(side='left', padx=10, pady=20)
 
-    # Exit button to exit the system
-    exit_list_users_frame_button = tk.Button(list_users_frame, text="Exit System", command=lambda: quit_app(root))
-    exit_list_users_frame_button.grid(row=3, column=1, padx=10, pady=20, sticky="e")
+    # Exit system button
+    exit_button = tk.Button(list_all_users_frame, text="Exit System", command=lambda: quit_app(root))
+    exit_button.pack(side='right', padx=10, pady=20)
 
-    return list_users_frame
+    return list_all_users_frame
